@@ -5,13 +5,15 @@ namespace Irehon.Editor
 {
     public class Node<T> where T : IEquatable<T>
     {
-        protected T data;
-        public Node<T> parent { get; protected set; }
+        public Node<T> parent { get; private set; }
+        public int depth { get; }
+        public T data { get; }
         protected List<Node<T>> childs = new List<Node<T>>();
 
-        public Node(T data)
+        public Node(T data, int depth)
         {
             this.data = data;
+            this.depth = depth;
         }
 
         public void InsertNode(Node<T> node)

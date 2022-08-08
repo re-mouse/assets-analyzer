@@ -2,27 +2,34 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace DependenciesHunter
+namespace Irehon.Editor
 {
     public static class Layout {
         public static void Horizontal(Action block, int width = 0, int height = 0)
         {
-            List<GUILayoutOption> options = new List<GUILayoutOption>();
-            if (width != 0)
-                options.Add(GUILayout.);
-            GUILayout.BeginHorizontal();
+            GUILayout.BeginHorizontal(GetOptions(width, height));
             
             block();
             
             GUILayout.EndHorizontal();
         }
 
-        public static void Vertical(Action block) {
-            GUILayout.BeginVertical();
+        public static void Vertical(Action block, int width, int height) {
+            GUILayout.BeginVertical(GetOptions(width, height));
             
             block();
             
             GUILayout.EndVertical();
+        }
+
+        public static GUILayoutOption[] GetOptions(int width, int height)
+        {
+            List<GUILayoutOption> options = new List<GUILayoutOption>();
+            if (width > 0)
+                options.Add(GUILayout.Width(width));
+            if (height > 0)
+                options.Add(GUILayout.Height(height));
+            return options.ToArray();
         }
     }
 }

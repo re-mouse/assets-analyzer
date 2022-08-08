@@ -9,7 +9,7 @@ namespace Irehon.Editor
         public bool IsOpen;
         private bool isActive;
 
-        public PathNode(string name) : base(name) { }
+        public PathNode(string name, int depth) : base(name, depth) { }
         
         public void SetActive(bool isActive)
         {
@@ -26,7 +26,7 @@ namespace Irehon.Editor
             return isActive;
         }
 
-        public string GetPath()
+        public string GetRelativePath()
         {
             StringBuilder path = new StringBuilder();
             
@@ -35,29 +35,6 @@ namespace Irehon.Editor
             int i = 0;
             
             while (!currentNode.IsRootNode())
-            {
-                string name = currentNode.GetData();
-                
-                if (i != 0)
-                    name += "/";
-                
-                path.Insert(0, name);
-                currentNode = currentNode.parent;
-                i++;
-            }
-
-            return path.ToString();
-        }
-        
-        public string GetPathWithoutRootNode()
-        {
-            StringBuilder path = new StringBuilder();
-            
-            Node<string> currentNode = this;
-            
-            int i = 0;
-            
-            while (currentNode != null && currentNode.parent != null && !currentNode.parent.IsRootNode())
             {
                 string name = currentNode.GetData();
                 

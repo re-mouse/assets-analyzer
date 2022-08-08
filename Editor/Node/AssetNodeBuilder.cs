@@ -15,7 +15,7 @@ namespace Irehon.Editor
 
         public AssetNode GetAssetNodes(string[] paths, bool activeNodes = true, bool openNodes = false)
         {
-            AssetNode baseNode = new AssetNode(rootName);
+            AssetNode baseNode = new AssetNode(rootName, 0);
             baseNode.IsOpen = openNodes;
             foreach (string path in paths)
             {
@@ -32,7 +32,7 @@ namespace Irehon.Editor
                     AssetNode findingNode = (AssetNode)currentNode.FindNode(pathObjects[i]);
                     if (findingNode == null)
                     {
-                        AssetNode newNode = new AssetNode(pathObjects[i]);
+                        AssetNode newNode = new AssetNode(pathObjects[i], i);
                         newNode.IsOpen = openNodes;
                         currentNode.InsertNode(newNode);
                         currentNode = newNode;

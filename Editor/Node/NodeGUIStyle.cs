@@ -2,6 +2,8 @@
 {
     public class NodeGUIStyle
     {
+        public int fileBlockWidth = 350;
+        public int fileSizeBlockWidth = 200;
         public int depthPixelsOffset = 16;
         public int objectPixelsOffset = 15;
         public int toggleWidth = 20;
