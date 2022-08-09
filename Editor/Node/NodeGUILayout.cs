@@ -20,16 +20,41 @@ namespace Irehon.Editor
 
         public void LayoutRootNode()
         {
-            LayoutNode(rootNode);
+            LayoutNodePath(rootNode);
         }
         
         public void LayoutChildsNode()
         {
+            EditorGUILayout.BeginHorizontal();
+            
+            EditorGUILayout.BeginVertical(GUILayout.Width(style.fileSizeBlockWidth));
             foreach (AssetNode node in rootNode.GetChilds())
-                LayoutNode(node);
+                LayoutNodeFileSize(node);
+            EditorGUILayout.EndVertical();
+            
+            EditorGUILayout.BeginVertical();
+            foreach (AssetNode node in rootNode.GetChilds())
+                LayoutNodePath(node);
+            EditorGUILayout.EndVertical();
+            
+            
+            EditorGUILayout.EndHorizontal();
+        }
+
+        private void LayoutNodeFileSize(AssetNode node)
+        {
+            EditorGUILayout.LabelField(node.GetReadableTotalSize(), GUILayout.Height(style.rowHeight));
+            if (node.IsOpen)
+            {
+                foreach (AssetNode child in node.GetChilds())
+                {
+                    if (child.IsOpen || child.IsEndNode())
+                        LayoutNodeFileSize(child);
+                }
+            }
         }
         
-        private void LayoutNode(AssetNode node)
+        private void LayoutNodePath(AssetNode node)
         {
             if (node.IsEndNode())
                 LayoutFileNodeHorizontalTab(node);
@@ -44,42 +69,28 @@ namespace Irehon.Editor
             if (node.IsOpen)
             {
                 foreach (AssetNode childNode in node.GetChilds())
-                    LayoutNode(childNode);
+                    LayoutNodePath(childNode);
             }
         }
 
         private void LayoutFileNodeHorizontalTab(AssetNode node)
         {
-            EditorGUILayout.BeginHorizontal(GUILayout.Width(style.objectFieldWidth + style.fileSizeBlockWidth));
+            EditorGUILayout.BeginHorizontal(GUILayout.Width(style.objectFieldWidth), GUILayout.Height(style.rowHeight));
 
-            {
-                EditorGUILayout.BeginHorizontal(GUILayout.Width(style.objectFieldWidth));
+            if (style.renderToggle)
+                node.SetActive(EditorGUILayout.Toggle(node.IsActive(), GUILayout.Width(style.toggleWidth)));
 
-                if (style.renderToggle)
-                    node.SetActive(EditorGUILayout.Toggle(node.IsActive(), GUILayout.Width(style.toggleWidth)));
+            if (node.depth != 0)
+                GUILayout.Space(style.depthPixelsOffset * node.depth + style.objectPixelsOffset);
 
-                if (node.depth != 0)
-                    GUILayout.Space(style.depthPixelsOffset * node.depth + style.objectPixelsOffset);
-
-                EditorGUILayout.ObjectField(node.GetAsset(), typeof(Object), GUILayout.Width(style.objectFieldWidth));
-
-                EditorGUILayout.EndHorizontal();
-            }
-
-            {
-                EditorGUILayout.BeginHorizontal(GUILayout.Width(style.fileSizeBlockWidth));
-
-                EditorGUILayout.LabelField(node.GetSizeBytes().ToString());
-
-                EditorGUILayout.EndHorizontal();
-            }
+            EditorGUILayout.ObjectField(node.GetAsset(), typeof(Object), GUILayout.Width(style.objectFieldWidth));
 
             EditorGUILayout.EndHorizontal();
         }
 
         private void LayoutFolderNodeHorizontalTab(AssetNode node)
         {
-            EditorGUILayout.BeginHorizontal(GUILayout.Width(style.objectFieldWidth));
+            EditorGUILayout.BeginHorizontal(GUILayout.Width(style.objectFieldWidth), GUILayout.Height(style.rowHeight));
                 
             if (style.renderToggle)
                 node.SetActive(EditorGUILayout.Toggle(node.IsActive(), GUILayout.Width(style.toggleWidth)));

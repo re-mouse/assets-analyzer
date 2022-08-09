@@ -15,7 +15,7 @@ namespace Irehon.Editor
 
         public AssetNode GetAssetNodes(string[] paths, bool activeNodes = true, bool openNodes = false)
         {
-            AssetNode baseNode = new AssetNode(rootName, 0);
+            AssetNode baseNode = new AssetNode(rootName, 0, true);
             baseNode.IsOpen = openNodes;
             foreach (string path in paths)
             {
@@ -32,7 +32,8 @@ namespace Irehon.Editor
                     AssetNode findingNode = (AssetNode)currentNode.FindNode(pathObjects[i]);
                     if (findingNode == null)
                     {
-                        AssetNode newNode = new AssetNode(pathObjects[i], i);
+                        bool isFolder = i == objectLength - 1;
+                        AssetNode newNode = new AssetNode(pathObjects[i], i, isFolder);
                         newNode.IsOpen = openNodes;
                         currentNode.InsertNode(newNode);
                         currentNode = newNode;
@@ -42,8 +43,11 @@ namespace Irehon.Editor
                 }
             }
             
+            baseNode.ClearFoldersOnChilds();
+            
             baseNode.SetActive(activeNodes);
             baseNode.SortByChildCountAllNodes();
+            baseNode.CalculateTotalNodeSize();
 
             return baseNode;
         }
