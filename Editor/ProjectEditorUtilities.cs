@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using UnityEditor;
 
@@ -23,13 +24,19 @@ namespace Irehon.Editor
         {
             AssetNodeBuilder dependenciesNodeBuilder = new AssetNodeBuilder();
 
-            AssetNode rootNode = dependenciesNodeBuilder.GetAssetNodes(GetUnusedPaths());
+            AssetNode rootNode = dependenciesNodeBuilder.GetFilteredAssetNodes(GetUnusedPaths(), IsAcceptableAssetPath);
 
-            AssetNode assetsNode = (AssetNode)rootNode.FindNode("Assets");
-
-            NodeViewerWindow window = NodeViewerWindow.CreateWindow(assetsNode, "Unused assets");
+            NodeViewerWindow window = NodeViewerWindow.CreateWindow(rootNode, "Unused assets");
             
             window.Show();
+        }
+
+        private static bool IsAcceptableAssetPath(string path)
+        {
+            if (Directory.Exists(path))
+                return false;
+            
+            return true;
         }
 
         private static string[] GetUnusedPaths()

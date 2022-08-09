@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using UnityEngine;
 
 namespace Irehon.Editor
 {
@@ -14,6 +15,20 @@ namespace Irehon.Editor
         {
             this.data = data;
             this.depth = depth;
+        }
+
+        public void FilterEndNodes(Func<T, bool> filteringPattern)
+        {
+            foreach (Node<T> child in childs)
+            {
+                if (child.IsEndNode() && !filteringPattern(child.data))
+                {
+                    Debug.Log($"Removed {child.data}");
+                    childs.Remove(child);
+                }
+                else
+                    child.FilterEndNodes(filteringPattern);
+            }
         }
 
         public void InsertNode(Node<T> node)

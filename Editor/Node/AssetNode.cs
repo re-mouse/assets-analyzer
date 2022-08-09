@@ -73,6 +73,8 @@ namespace Irehon.Editor
         {
             AssetNode firstAsset = (AssetNode)first;
             AssetNode secondsAsset = (AssetNode)second;
+            if (firstAsset.size == secondsAsset.size)
+                return 0;
             return secondsAsset.size > firstAsset.size ? 1 : -1;
         }
 

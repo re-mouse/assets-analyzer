@@ -7,13 +7,13 @@ namespace Irehon.Editor
     public static class NodeGUIPreferences
     {
         public static readonly int FileSizeBlockWidth = 20;
-        public static readonly int FileBlockWidth = 250;
+        public static readonly int FileBlockWidth = 300;
         
-        public static readonly int AssetFieldWidth = 100;
+        public static readonly int AssetFieldWidth = 150;
         public static readonly int ToggleWidth = 7;
         public static readonly int NodeUsageWidth = 100;
         
-        public static readonly int DepthPixelsOffset = 16;
+        public static readonly int DepthPixelsOffset = 25;
         public static readonly int AssetPixelsOffset = 15;
     }
     
@@ -34,8 +34,7 @@ namespace Irehon.Editor
         {
             EditorGUILayout.BeginVertical();
             
-            foreach (AssetNode child in rootNode.GetChilds())
-                LayoutNode(child);
+            LayoutNode(rootNode);
 
             EditorGUILayout.EndVertical();
         }

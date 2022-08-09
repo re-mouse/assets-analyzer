@@ -13,10 +13,38 @@ namespace Irehon.Editor
             this.rootName = rootName;
         }
 
-        public AssetNode GetAssetNodes(string[] paths, bool activeNodes = true, bool openNodes = false)
+        public AssetNode GetAssetNodes(string[] paths)
         {
             AssetNode baseNode = new AssetNode(rootName, 0, true);
-            baseNode.IsOpen = openNodes;
+            FillNodeWithPaths(baseNode, paths);
+
+            baseNode.ClearFoldersOnChilds();
+
+            baseNode.SetActive(true);
+            baseNode.CalculateTotalNodeSize();
+            baseNode.SortAllNodes();
+
+            return baseNode;
+        }
+        
+        public AssetNode GetFilteredAssetNodes(string[] paths, Func<string, bool> filteringAssetsPattern)
+        {
+            AssetNode baseNode = new AssetNode(rootName, 0, true);
+            FillNodeWithPaths(baseNode, paths);
+            
+            baseNode.FilterEndNodes(filteringAssetsPattern);
+
+            baseNode.ClearFoldersOnChilds();
+
+            baseNode.SetActive(true);
+            baseNode.CalculateTotalNodeSize();
+            baseNode.SortAllNodes();
+
+            return baseNode;
+        }
+
+        private static void FillNodeWithPaths(AssetNode baseNode, string[] paths)
+        {
             foreach (string path in paths)
             {
                 string[] pathObjects = path.Split('/');
@@ -34,7 +62,6 @@ namespace Irehon.Editor
                     {
                         bool isFolder = i != objectLength - 1;
                         AssetNode newNode = new AssetNode(pathObjects[i], i, isFolder);
-                        newNode.IsOpen = openNodes;
                         currentNode.InsertNode(newNode);
                         currentNode = newNode;
                     }
@@ -42,17 +69,9 @@ namespace Irehon.Editor
                         currentNode = findingNode;
                 }
             }
-            
-            baseNode.ClearFoldersOnChilds();
-            
-            baseNode.SetActive(activeNodes);
-            baseNode.CalculateTotalNodeSize();
-            baseNode.SortAllNodes();
-
-            return baseNode;
         }
 
-        private bool IsAssetsFolder(string[] pathObjects) =>
+        private static bool IsAssetsFolder(string[] pathObjects) =>
             pathObjects[0] == "Assets";
     }
 }
