@@ -6,11 +6,12 @@ namespace Irehon.Editor
 {
     public static class NodeGUIPreferences
     {
-        public static readonly int FileSizeBlockWidth = 50;
-        public static readonly int FileBlockWidth = 350;
+        public static readonly int FileSizeBlockWidth = 20;
+        public static readonly int FileBlockWidth = 250;
         
         public static readonly int AssetFieldWidth = 100;
         public static readonly int ToggleWidth = 7;
+        public static readonly int NodeUsageWidth = 100;
         
         public static readonly int DepthPixelsOffset = 16;
         public static readonly int AssetPixelsOffset = 15;
@@ -60,6 +61,8 @@ namespace Irehon.Editor
             LayoutRowColumn(NodeGUIPreferences.FileBlockWidth, node.LayoutAssetWithOffset);
 
             LayoutRowColumn(NodeGUIPreferences.FileSizeBlockWidth, node.LayoutFileSize);
+            
+            LayoutRowColumn(NodeGUIPreferences.NodeUsageWidth, options => LayoutNodePercentUsage(node));
 
             EditorGUILayout.EndHorizontal();
             
@@ -71,6 +74,20 @@ namespace Irehon.Editor
             GUILayout.BeginHorizontal(GUILayout.Width(width));
             columnBlock(options);
             GUILayout.EndHorizontal();
+        }
+
+        private void LayoutNodePercentUsage(AssetNode node)
+        {
+            float usagePercentFromRoot = (float)node.size / rootNode.size;
+
+            int usageWidth = Mathf.RoundToInt(NodeGUIPreferences.NodeUsageWidth * usagePercentFromRoot);
+            int freeWidth = NodeGUIPreferences.NodeUsageWidth - usageWidth;
+            
+            Rect rect = EditorGUILayout.GetControlRect(GUILayout.Width(usageWidth));
+            EditorGUI.DrawRect(rect, Color.blue);
+            
+            rect = EditorGUILayout.GetControlRect(GUILayout.Width(freeWidth));
+            EditorGUI.DrawRect(rect, Color.white);
         }
         
         private GUIStyle GetStyleByColor(Color color)

@@ -22,17 +22,17 @@ namespace Irehon.Editor
             childs.Add(node);
         }
 
-        public void SortByChildCount()
+        public void Sort()
         {
-            childs.Sort((first, second) => second.childs.Count - first.childs.Count);
+            childs.Sort(CompareNode);
         }
         
-        public void SortByChildCountAllNodes()
+        public void SortAllNodes()
         {
-            SortByChildCount();
+            Sort();
             
             foreach (Node<T> node in childs)
-                node.SortByChildCountAllNodes();
+                node.SortAllNodes();
         }
 
         public List<Node<T>> GetChilds()
@@ -64,6 +64,11 @@ namespace Irehon.Editor
             }
 
             return null;
+        }
+
+        protected virtual int CompareNode(Node<T> first, Node<T> second)
+        {
+            return second.childs.Count - first.childs.Count;
         }
     }
 }

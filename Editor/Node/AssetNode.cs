@@ -14,11 +14,11 @@ namespace Irehon.Editor
         {
             this.isFolder = isFolder;
         }
+
+        public long size { get; private set; }
         
-        private long size;
         private bool isFolder;
         private string cachedReadableSize;
-        private float percentTotalSizeFromRoot;
         private Object asset;
         
         public Object GetAsset()
@@ -26,13 +26,6 @@ namespace Irehon.Editor
             if (asset == null)
                 CacheAsset();
             return asset;
-        }
-
-        public long GetTotalSizeBytes()
-        {
-            if (size == 0)
-                CalculateTotalNodeSize();
-            return size;
         }
 
         public string GetReadableTotalSize()
@@ -76,14 +69,11 @@ namespace Irehon.Editor
             return size;
         }
 
-        private long GetRootTotalSize()
+        protected override int CompareNode(Node<string> first, Node<string> second)
         {
-            Node<string> node = this;
-            while (!node.IsRootNode())
-                node = node.parent;
-
-            AssetNode rootAssetNode = (AssetNode)node;
-            return rootAssetNode.size;
+            AssetNode firstAsset = (AssetNode)first;
+            AssetNode secondsAsset = (AssetNode)second;
+            return secondsAsset.size > firstAsset.size ? 1 : -1;
         }
 
         private void CacheAsset()

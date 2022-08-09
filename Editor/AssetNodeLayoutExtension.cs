@@ -11,6 +11,7 @@ namespace Irehon.Editor
 
         public static void LayoutFileSize(this AssetNode node, params GUILayoutOption[] options)
         {
+            options = options.AddOption(GUILayout.Width(NodeGUIPreferences.FileBlockWidth));
             EditorGUILayout.LabelField(node.GetReadableTotalSize(), options);
         }
 
@@ -47,10 +48,16 @@ namespace Irehon.Editor
 
         private static void LayoutAsAsset(this AssetNode node, params GUILayoutOption[] options)
         {
-            List<GUILayoutOption> assetOptions = new List<GUILayoutOption>(options);
-            assetOptions.Add(GUILayout.Width(NodeGUIPreferences.AssetFieldWidth));
+            options = options.AddOption(GUILayout.Width(NodeGUIPreferences.AssetFieldWidth));
             
-            EditorGUILayout.ObjectField(node.GetAsset(), typeof(Object), assetOptions.ToArray());
+            EditorGUILayout.ObjectField(node.GetAsset(), typeof(Object), options);
+        }
+
+        private static GUILayoutOption[] AddOption(this GUILayoutOption[] options, GUILayoutOption option)
+        {
+            List<GUILayoutOption> newOptions = new List<GUILayoutOption>(options);
+            newOptions.Add(GUILayout.Width(NodeGUIPreferences.AssetFieldWidth));
+            return newOptions.ToArray();
         }
     }
 }
