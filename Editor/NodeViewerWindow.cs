@@ -28,14 +28,11 @@ namespace Irehon.Editor
 
         private void OnGUI()
         {
-            GUILayout.BeginVertical();
- 
             scrollPosition = GUILayout.BeginScrollView(scrollPosition,false,true, GUILayout.ExpandHeight(true));
  
             nodeGUILayout.LayoutChildsNode();
  
             GUILayout.EndScrollView ();
-            GUILayout.EndVertical();
         }
     }
 }
