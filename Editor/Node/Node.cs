@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using UnityEngine;
 
 namespace Irehon.Editor
 {
@@ -22,10 +21,7 @@ namespace Irehon.Editor
             foreach (Node<T> child in childs)
             {
                 if (child.IsEndNode() && !filteringPattern(child.data))
-                {
-                    Debug.Log($"Removed {child.data}");
                     childs.Remove(child);
-                }
                 else
                     child.FilterEndNodes(filteringPattern);
             }

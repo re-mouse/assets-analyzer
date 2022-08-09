@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using UnityEditor;
+﻿using UnityEditor;
 using UnityEngine;
-using Object = UnityEngine.Object;
 
 namespace Irehon.Editor
 {

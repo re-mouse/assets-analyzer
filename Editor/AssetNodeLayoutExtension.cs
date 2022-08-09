@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using Codice.Client.Common.Tree;
+﻿using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 using Object = UnityEngine.Object;

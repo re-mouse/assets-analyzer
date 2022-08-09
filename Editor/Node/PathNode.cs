@@ -1,6 +1,4 @@
 ﻿using System.Text;
-using UnityEditor;
-using UnityEngine;
 
 namespace Irehon.Editor
 {
