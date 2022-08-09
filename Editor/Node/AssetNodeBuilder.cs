@@ -32,7 +32,7 @@ namespace Irehon.Editor
                     AssetNode findingNode = (AssetNode)currentNode.FindNode(pathObjects[i]);
                     if (findingNode == null)
                     {
-                        bool isFolder = i == objectLength - 1;
+                        bool isFolder = i != objectLength - 1;
                         AssetNode newNode = new AssetNode(pathObjects[i], i, isFolder);
                         newNode.IsOpen = openNodes;
                         currentNode.InsertNode(newNode);

@@ -18,6 +18,7 @@ namespace Irehon.Editor
         private long size;
         private bool isFolder;
         private string cachedReadableSize;
+        private float percentTotalSizeFromRoot;
         private Object asset;
         
         public Object GetAsset()
@@ -75,6 +76,16 @@ namespace Irehon.Editor
             return size;
         }
 
+        private long GetRootTotalSize()
+        {
+            Node<string> node = this;
+            while (!node.IsRootNode())
+                node = node.parent;
+
+            AssetNode rootAssetNode = (AssetNode)node;
+            return rootAssetNode.size;
+        }
+
         private void CacheAsset()
         {
             if (!IsEndNode())
@@ -123,7 +134,7 @@ namespace Irehon.Editor
             return path.ToString();
         }
         
-        static string BytesToString(long byteCount)
+        private string BytesToString(long byteCount)
         {
             string[] suf = { "B", "KB", "MB", "GB", "TB", "PB", "EB" }; //Longs run out around EB
             

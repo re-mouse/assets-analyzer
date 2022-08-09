@@ -47,7 +47,10 @@ namespace Irehon.Editor
 
         private static void LayoutAsAsset(this AssetNode node, params GUILayoutOption[] options)
         {
-            EditorGUILayout.ObjectField(node.GetAsset(), typeof(Object), options);
+            List<GUILayoutOption> assetOptions = new List<GUILayoutOption>(options);
+            assetOptions.Add(GUILayout.Width(NodeGUIPreferences.AssetFieldWidth));
+            
+            EditorGUILayout.ObjectField(node.GetAsset(), typeof(Object), assetOptions.ToArray());
         }
     }
 }

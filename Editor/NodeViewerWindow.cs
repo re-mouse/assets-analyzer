@@ -30,7 +30,7 @@ namespace Irehon.Editor
         {
             scrollPosition = GUILayout.BeginScrollView(scrollPosition,false,true, GUILayout.ExpandHeight(true));
  
-            nodeGUILayout.LayoutChildsNode();
+            nodeGUILayout.LayoutRootNodeContent();
  
             GUILayout.EndScrollView ();
         }
