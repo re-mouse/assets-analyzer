@@ -26,7 +26,7 @@ namespace Irehon.Editor
 
             AssetNode rootNode = dependenciesNodeBuilder.GetFilteredAssetNodes(GetUnusedPaths(), IsAcceptableAssetPath);
 
-            NodeViewerWindow window = NodeViewerWindow.CreateWindow(rootNode, "Unused assets");
+            AssetNodeCleanerWindow window = AssetNodeCleanerWindow.CreateWindow(rootNode, "Unused assets");
             
             window.Show();
         }
