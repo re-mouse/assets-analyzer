@@ -9,21 +9,29 @@ namespace Irehon.Editor
 {
     public class NodeViewerWindow : EditorWindow
     {
+        private static readonly string WindowName = "Assets dependencies";
         private NodeGUILayout nodeGUILayout;
         private Vector2 scrollPosition;
 
-        public static NodeViewerWindow CreateWindow(AssetNode node, string windowName)
+        public static void CreateAndShow()
         {
-            var window = (NodeViewerWindow)GetWindow(typeof(NodeViewerWindow), true, windowName);
+            var window = (NodeViewerWindow)GetWindow(typeof(NodeViewerWindow), true, WindowName);
             
-            window.Setup(node);
+            window.BuildNodeLayout();
             
-            return window;
+            window.Show();
+        }
+        
+        private void BuildNodeLayout()
+        {
+            nodeGUILayout = new NodeGUILayout(GetDependencyNode(), false);
         }
 
-        public void Setup(AssetNode baseNode)
+        private AssetNode GetDependencyNode()
         {
-            nodeGUILayout = new NodeGUILayout(baseNode);
+            AssetNodeBuilder dependenciesNodeBuilder = new AssetNodeBuilder();
+
+            return dependenciesNodeBuilder.GetAssetNodes(ProjectEditorUtilities.GetDependenciesPath());
         }
 
         private void OnGUI()

@@ -10,13 +10,7 @@ namespace Irehon.Editor
         [MenuItem("Project/Show Assets Dependency")]
         private static void ShowAssetsDependenciesWindow()
         {
-            AssetNodeBuilder dependenciesNodeBuilder = new AssetNodeBuilder();
-
-            AssetNode node = dependenciesNodeBuilder.GetAssetNodes(GetDependenciesPath());
-            
-            NodeViewerWindow window = NodeViewerWindow.CreateWindow(node, "Assets dependencies");
-            
-            window.Show();
+            NodeViewerWindow.CreateAndShow();
         }
 
         [MenuItem("Project/Show Unused Assets")]

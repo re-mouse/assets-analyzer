@@ -23,7 +23,7 @@ namespace Irehon.Editor
         private bool isRenderToggle;
         private AssetNode rootNode;
         
-        public NodeGUILayout(AssetNode rootNode, bool isRenderToggle = false)
+        public NodeGUILayout(AssetNode rootNode, bool isRenderToggle)
         {
             this.rootNode = rootNode;
 
