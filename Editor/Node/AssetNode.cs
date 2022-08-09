@@ -38,8 +38,6 @@ namespace Irehon.Editor
             List<AssetNode> childsToRemove = new List<AssetNode>();
             foreach (AssetNode child in childs)
             {
-                if (child.IsEndNode() && child.GetFullPath() == "D:/UnityProjects/Irehon/Assets/Models/Training_dummy")
-                    Debug.Log(child.GetFullPath());
                 if (child.IsEndNode() && child.GetAttributes().HasFlag(FileAttributes.Directory))
                     childsToRemove.Add(child);
                 else
