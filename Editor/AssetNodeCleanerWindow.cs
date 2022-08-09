@@ -1,29 +1,40 @@
-﻿using UnityEditor;
+﻿using System.IO;
+using UnityEditor;
 using UnityEngine;
 
 namespace Irehon.Editor
 {
     public class AssetNodeCleanerWindow : EditorWindow
     {
+        private static readonly string WindowName = "Unused assets";
+        
         private NodeGUILayout nodeGUILayout;
         private Vector2 scrollPosition;
         private AssetNode rootNode;
 
-        public static AssetNodeCleanerWindow CreateWindow(AssetNode node, string windowName)
+        public static void CreateAndShow()
         {
-            var window = (AssetNodeCleanerWindow)GetWindow(typeof(AssetNodeCleanerWindow), true, windowName);
+            var window = (AssetNodeCleanerWindow)GetWindow(typeof(AssetNodeCleanerWindow), true, WindowName);
             
-            window.Setup(node);
+            window.BuildNodeLayout();
             
-            return window;
+            window.Show();
         }
 
-        public void Setup(AssetNode rootNode)
+        private void BuildNodeLayout()
         {
-            this.rootNode = rootNode;
-            nodeGUILayout = new NodeGUILayout(this.rootNode, true);
+            BuildRootNode();
+            
+            nodeGUILayout = new NodeGUILayout(rootNode, true);
         }
 
+        private void BuildRootNode()
+        {
+            AssetNodeBuilder dependenciesNodeBuilder = new AssetNodeBuilder();
+
+            rootNode = dependenciesNodeBuilder.GetFilteredAssetNodes(ProjectEditorUtilities.GetUnusedPaths(), IsAcceptableAssetPath);
+        }
+        
         private void OnGUI()
         {
             LayoutNodeBlock();
@@ -42,7 +53,10 @@ namespace Irehon.Editor
         private void LayoutDeleteButtons()
         {
             if (GUILayout.Button("Delete selected"))
+            {
                 DeleteActiveAssetNodes(rootNode);
+                BuildNodeLayout();
+            }
         }
 
         private void DeleteActiveAssetNodes(AssetNode node)
@@ -58,7 +72,17 @@ namespace Irehon.Editor
 
         private void DeleteAssetNode(AssetNode node)
         {
-            AssetDatabase.DeleteAsset(node.data);
+            string path = node.GetRelativePath();
+            path = path.Insert(0, "Assets/");
+            AssetDatabase.DeleteAsset(path);
+        }
+        
+        private static bool IsAcceptableAssetPath(string path)
+        {
+            if (Directory.Exists(path))
+                return false;
+            
+            return true;
         }
     }
 }

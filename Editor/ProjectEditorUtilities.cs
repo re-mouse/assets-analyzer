@@ -22,24 +22,10 @@ namespace Irehon.Editor
         [MenuItem("Project/Show Unused Assets")]
         private static void ShowUnusedAssetsWindow()
         {
-            AssetNodeBuilder dependenciesNodeBuilder = new AssetNodeBuilder();
-
-            AssetNode rootNode = dependenciesNodeBuilder.GetFilteredAssetNodes(GetUnusedPaths(), IsAcceptableAssetPath);
-
-            AssetNodeCleanerWindow window = AssetNodeCleanerWindow.CreateWindow(rootNode, "Unused assets");
-            
-            window.Show();
+            AssetNodeCleanerWindow.CreateAndShow();
         }
 
-        private static bool IsAcceptableAssetPath(string path)
-        {
-            if (Directory.Exists(path))
-                return false;
-            
-            return true;
-        }
-
-        private static string[] GetUnusedPaths()
+        public static string[] GetUnusedPaths()
         {
             string[] allAssetsPaths = AssetDatabase.GetAllAssetPaths();
             string[] dependenciesPaths = GetDependenciesPath();
@@ -47,7 +33,7 @@ namespace Irehon.Editor
             return allAssetsPaths.Except(dependenciesPaths).ToArray();
         }
         
-        private static string[] GetDependenciesPath()
+        public static string[] GetDependenciesPath()
         {
             var gameScenes = AssetDatabase.FindAssets("t:Scene", new string[] { "Assets/Scenes" });
             
