@@ -10,6 +10,13 @@ namespace Irehon.Editor
         private bool isActive;
 
         public PathNode(string name, int depth) : base(name, depth) { }
+
+        public void SetOpenAllNodes(bool isOpen)
+        {
+            IsOpen = true;
+            foreach (PathNode child in childs)
+                child.SetOpenAllNodes(isOpen);
+        }
         
         public void SetActive(bool isActive)
         {

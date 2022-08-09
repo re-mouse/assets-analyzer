@@ -23,7 +23,7 @@ namespace Irehon.Editor
         private bool isRenderToggle;
         private AssetNode rootNode;
         
-        public NodeGUILayout(AssetNode rootNode, bool isRenderToggle = false) //TODO: layout preferences : show toggle, openable, const value
+        public NodeGUILayout(AssetNode rootNode, bool isRenderToggle = false)
         {
             this.rootNode = rootNode;
 
@@ -32,11 +32,26 @@ namespace Irehon.Editor
         
         public void LayoutRootNodeContent()
         {
+            LayoutNodeExpandButtons();
+            
             EditorGUILayout.BeginVertical();
             
             LayoutNode(rootNode);
 
             EditorGUILayout.EndVertical();
+        }
+
+        private void LayoutNodeExpandButtons()
+        {
+            EditorGUILayout.BeginHorizontal();
+            
+            if (GUILayout.Button("Expand all (Cause lags)"))
+                rootNode.SetOpenAllNodes(true);
+            
+            if (GUILayout.Button("Hide all"))
+                rootNode.SetOpenAllNodes(false);
+
+            EditorGUILayout.EndHorizontal();
         }
 
         private void LayoutNode(AssetNode node)
