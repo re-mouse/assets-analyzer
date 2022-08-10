@@ -33,6 +33,16 @@ namespace Irehon.Editor
             return cachedReadableSize;
         }
 
+        public void Remove(AssetNode node)
+        {
+            if (!childs.Contains(node))
+                throw new ArgumentException();
+
+            childs.Remove(node);
+            if (childs.Count == 0)
+                ((AssetNode)parent).Remove(this);
+        }
+
         public void ClearFoldersOnChilds()
         {
             List<AssetNode> childsToRemove = new List<AssetNode>();
@@ -66,35 +76,8 @@ namespace Irehon.Editor
 
             return size;
         }
-
-        protected override int CompareNode(Node<string> first, Node<string> second)
-        {
-            AssetNode firstAsset = (AssetNode)first;
-            AssetNode secondsAsset = (AssetNode)second;
-            if (firstAsset.size == secondsAsset.size)
-                return 0;
-            return secondsAsset.size > firstAsset.size ? 1 : -1;
-        }
-
-        private void CacheAsset()
-        {
-            if (!IsEndNode())
-                return;
-            
-            asset = EditorUtility.FindAsset(GetRelativePath(), typeof(Object));
-        }
-
-        private FileInfo GetFileInfo()
-        {
-            return new FileInfo(GetFullPath());
-        }
-
-        private FileAttributes GetAttributes()
-        {
-            return File.GetAttributes(GetFullPath());
-        }
-
-        private string GetFullPath()
+        
+        public string GetFullPath()
         {
             StringBuilder path = new StringBuilder();
             
@@ -123,7 +106,34 @@ namespace Irehon.Editor
 
             return path.ToString();
         }
-        
+
+        protected override int CompareNode(Node<string> first, Node<string> second)
+        {
+            AssetNode firstAsset = (AssetNode)first;
+            AssetNode secondsAsset = (AssetNode)second;
+            if (firstAsset.size == secondsAsset.size)
+                return 0;
+            return secondsAsset.size > firstAsset.size ? 1 : -1;
+        }
+
+        private void CacheAsset()
+        {
+            if (!IsEndNode())
+                return;
+            
+            asset = EditorUtility.FindAsset(GetRelativePath(), typeof(Object));
+        }
+
+        private FileInfo GetFileInfo()
+        {
+            return new FileInfo(GetFullPath());
+        }
+
+        private FileAttributes GetAttributes()
+        {
+            return File.GetAttributes(GetFullPath());
+        }
+
         private string BytesToString(long byteCount)
         {
             string[] suf = { "B", "KB", "MB", "GB", "TB", "PB", "EB" }; //Longs run out around EB

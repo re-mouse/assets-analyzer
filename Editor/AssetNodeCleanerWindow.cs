@@ -56,6 +56,8 @@ namespace Irehon.Editor
             {
                 DeleteActiveAssetNodes(rootNode);
                 BuildNodeLayout();
+                
+                AssetDatabase.Refresh();
             }
         }
 
@@ -72,9 +74,7 @@ namespace Irehon.Editor
 
         private void DeleteAssetNode(AssetNode node)
         {
-            string path = node.GetRelativePath();
-            path = path.Insert(0, "Assets/");
-            AssetDatabase.DeleteAsset(path);
+            File.Delete(node.GetFullPath());
         }
         
         private static bool IsAcceptableAssetPath(string path)

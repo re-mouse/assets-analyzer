@@ -20,7 +20,7 @@ namespace Irehon.Editor
 
             baseNode.ClearFoldersOnChilds();
 
-            baseNode.SetActive(true);
+            baseNode.SetActive(false);
             baseNode.CalculateTotalNodeSize();
             baseNode.SortAllNodes();
 
