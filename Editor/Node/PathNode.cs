@@ -11,7 +11,7 @@ namespace Irehon.Editor
 
         public void SetOpenAllNodes(bool isOpen)
         {
-            IsOpen = true;
+            IsOpen = isOpen;
             foreach (PathNode child in childs)
                 child.SetOpenAllNodes(isOpen);
         }
