@@ -8,7 +8,13 @@ namespace Irehon.Editor
         [MenuItem("Project/Show Assets Dependency")]
         private static void ShowAssetsDependenciesWindow()
         {
-            NodeViewerWindow.CreateAndShow();
+            NodeViewerWindow.CreateAndShow(GetDependenciesPath());
+        }
+        
+        [MenuItem("Project/Show All Assets")]
+        private static void ShowAllAssetsWindow()
+        {
+            NodeViewerWindow.CreateAndShow(GetAllAssetsPaths());
         }
 
         [MenuItem("Project/Show Unused Assets")]
@@ -23,6 +29,11 @@ namespace Irehon.Editor
             string[] dependenciesPaths = GetDependenciesPath();
 
             return allAssetsPaths.Except(dependenciesPaths).ToArray();
+        }
+
+        public static string[] GetAllAssetsPaths()
+        {
+            return AssetDatabase.GetAllAssetPaths();
         }
         
         public static string[] GetDependenciesPath()

@@ -10,14 +10,12 @@ namespace Irehon.Editor
 {
     public class AssetNode : PathNode
     {
-        public AssetNode(string name, int depth, bool isFolder) : base(name, depth)
+        public AssetNode(string name, int depth) : base(name, depth)
         {
-            this.isFolder = isFolder;
         }
 
         public long size { get; private set; }
         
-        private bool isFolder;
         private string cachedReadableSize;
         private Object asset;
         
@@ -60,9 +58,9 @@ namespace Irehon.Editor
 
         public long CalculateTotalNodeSize()
         {
-            if (IsEndNode() && !isFolder)
+            if (IsEndNode() && !IsFolder)
             {
-                size = GetFileInfo().Length;
+                size = GetPathFileInfo().Length;
             }
             else
             {
@@ -75,36 +73,6 @@ namespace Irehon.Editor
             cachedReadableSize = BytesToString(size);
 
             return size;
-        }
-        
-        public string GetFullPath()
-        {
-            StringBuilder path = new StringBuilder();
-            
-            Node<string> currentNode = this;
-            
-            int i = 0;
-
-            if (currentNode.parent != null && !currentNode.parent.IsRootNode())
-            {
-                while (currentNode != null && currentNode.parent != null)
-                {
-                    string name = currentNode.GetData();
-
-                    if (i != 0)
-                        name += "/";
-
-                    path.Insert(0, name);
-                    currentNode = currentNode.parent;
-                    i++;
-                }
-            }
-            else
-                path.Insert(0, currentNode.GetData());
-
-            path.Insert(0, Application.dataPath + "/");
-
-            return path.ToString();
         }
 
         protected override int CompareNode(Node<string> first, Node<string> second)
@@ -122,16 +90,6 @@ namespace Irehon.Editor
                 return;
             
             asset = EditorUtility.FindAsset(GetRelativePath(), typeof(Object));
-        }
-
-        private FileInfo GetFileInfo()
-        {
-            return new FileInfo(GetFullPath());
-        }
-
-        private FileAttributes GetAttributes()
-        {
-            return File.GetAttributes(GetFullPath());
         }
 
         private string BytesToString(long byteCount)

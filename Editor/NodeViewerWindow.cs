@@ -9,25 +9,25 @@ namespace Irehon.Editor
         private NodeGUILayout nodeGUILayout;
         private Vector2 scrollPosition;
 
-        public static void CreateAndShow()
+        public static void CreateAndShow(string[] paths)
         {
             var window = (NodeViewerWindow)GetWindow(typeof(NodeViewerWindow), true, WindowName);
             
-            window.BuildNodeLayout();
+            window.BuildNodeLayout(paths);
             
             window.Show();
         }
         
-        private void BuildNodeLayout()
+        private void BuildNodeLayout(string[] paths)
         {
-            nodeGUILayout = new NodeGUILayout(GetDependencyNode(), false);
+            nodeGUILayout = new NodeGUILayout(GetDependencyNode(paths), false);
         }
 
-        private AssetNode GetDependencyNode()
+        private AssetNode GetDependencyNode(string[] paths)
         {
             AssetNodeBuilder dependenciesNodeBuilder = new AssetNodeBuilder();
 
-            return dependenciesNodeBuilder.GetAssetNodes(ProjectEditorUtilities.GetDependenciesPath());
+            return dependenciesNodeBuilder.GetAssetNodes(paths);
         }
 
         private void OnGUI()

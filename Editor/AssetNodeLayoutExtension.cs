@@ -18,7 +18,7 @@ namespace Irehon.Editor
             if (node.depth != 0)
                 GUILayout.Space(node.GetOffset());
             
-            if (node.IsEndNode())
+            if (node.IsEndNode() && !node.IsFolder)
                 node.LayoutAsAsset(options);
             else
                 node.LayoutAsFolder(options);

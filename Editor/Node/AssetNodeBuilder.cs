@@ -15,7 +15,7 @@ namespace Irehon.Editor
 
         public AssetNode GetAssetNodes(string[] paths)
         {
-            AssetNode baseNode = new AssetNode(rootName, 0, true);
+            AssetNode baseNode = new AssetNode(rootName, 0);
             FillNodeWithPaths(baseNode, paths);
 
             baseNode.ClearFoldersOnChilds();
@@ -29,7 +29,7 @@ namespace Irehon.Editor
         
         public AssetNode GetFilteredAssetNodes(string[] paths, Func<string, bool> filteringAssetsPattern)
         {
-            AssetNode baseNode = new AssetNode(rootName, 0, true);
+            AssetNode baseNode = new AssetNode(rootName, 0);
             FillNodeWithPaths(baseNode, paths);
             
             baseNode.FilterEndNodes(filteringAssetsPattern);
@@ -61,7 +61,7 @@ namespace Irehon.Editor
                     if (findingNode == null)
                     {
                         bool isFolder = i != objectLength - 1;
-                        AssetNode newNode = new AssetNode(pathObjects[i], i, isFolder);
+                        AssetNode newNode = new AssetNode(pathObjects[i], i);
                         currentNode.InsertNode(newNode);
                         currentNode = newNode;
                     }
