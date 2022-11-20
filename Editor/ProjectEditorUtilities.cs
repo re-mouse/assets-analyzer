@@ -38,14 +38,13 @@ namespace Irehon.Editor
         
         public static string[] GetDependenciesPath()
         {
-            var gameScenes = AssetDatabase.FindAssets("t:Scene", new string[] { "Assets/Scenes" });
-            
-            string[] scenesAssetId = new string[gameScenes.Length];
+            var scenes = EditorBuildSettings.scenes;
+            string[] gameScenesPath = new string[scenes.Length];
 
-            for (int i = 0; i < gameScenes.Length; i++)
-                scenesAssetId[i] = AssetDatabase.GUIDToAssetPath(gameScenes[i]);;
+            for (int i = 0; i < scenes.Length; i++)
+                gameScenesPath[i] = scenes[i].path;
 
-            return AssetDatabase.GetDependencies(scenesAssetId);
+            return AssetDatabase.GetDependencies(gameScenesPath);
         }
     }
 }

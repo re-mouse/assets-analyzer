@@ -5,7 +5,7 @@ namespace Irehon.Editor
 {
     public class NodeViewerWindow : EditorWindow
     {
-        private static readonly string WindowName = "Assets dependencies";
+        private static readonly string WindowName = "Assets";
         private NodeGUILayout nodeGUILayout;
         private Vector2 scrollPosition;
 
