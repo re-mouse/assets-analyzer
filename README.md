@@ -35,7 +35,7 @@ Shows the weight of all the assets and their folders currently used in the build
 
 # For what:
 I wrote it because of the weight of one of my past projects in 14GB, and it was not possible to understand what was related to the project and what was not, and with the help of it I saw all the dependencies, I was able to sort them, and then deleted about 10GB of assets
-> It wroted on node system, code written with flexibility and extensibility in mind
+> It wroted on node system, code written with flexibility and extensibility in mind, so adding any functionality is welcome
 
 # Examples on [pixel-wars repository](https://github.com/re-mouse/pixel-wars)
 
