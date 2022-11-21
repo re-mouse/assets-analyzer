@@ -31,23 +31,14 @@ Click Project in the top menu of the unit, select the required tool
 
 Assets dependencies | All assets | Unused Assets
 --- | --- | ---
-Shows the weight of all the assets and their folders currently used in the build, with a display of the memory occupied | Shows all the assets of the project, and the percentage of their occupied memory | Shows assets that are not used in the build, but are in the project folder and gives you the opportunity to delete them by selecting the necessary ones and clicking the bottom delete button (deletes them with a system call, not through a unit, so be sure you want to permanently delete the selected one)
+Shows the weight of all the assets and their folders currently used in the build, with a display of the memory occupied | Shows all the assets of the project, and display of the memory occupied | Shows assets that are not used in the build, but are in the project folder and gives you the opportunity to delete them by selecting the necessary ones and clicking the bottom delete button (deletes them with a system call, not through a unit, so be sure you want to permanently delete the selected one)
 
 # For what:
-There can be many reasons for the applications, I wrote it because of the weight of one of my past projects in 14GB, and it was not possible to understand what was related to the project and what was not, and with the help of it I saw all the dependencies, I was able to sort them, and then deleted about 10GB of assets
-
-Perhaps you just need an analytics of the space occupied in the project, my tool can help you with this, or if you wish, you can add your own functionality, I wrote it with the expectation of flexibility and extensibility
+I wrote it because of the weight of one of my past projects in 14GB, and it was not possible to understand what was related to the project and what was not, and with the help of it I saw all the dependencies, I was able to sort them, and then deleted about 10GB of assets
+> It wroted on node system, code written with flexibility and extensibility in mind
 
 # Examples on [pixel-wars repository](https://github.com/re-mouse/pixel-wars)
 
-- All Assets
-
-![](https://github.com/re-mouse/Image-sources/blob/master/AllAssets.png?raw=true)
-
-- Assets dependency
-
-![](https://github.com/re-mouse/Image-sources/blob/master/AssetsDependencies.png?raw=true)
-
-- Unused assets
-
-![](https://github.com/re-mouse/Image-sources/blob/master/UnusedAssets.png?raw=true)
+All Assets | Assets dependency | Unused assets
+--- | --- | ---
+![](https://github.com/re-mouse/Image-sources/blob/master/AllAssets.png?raw=true) | ![](https://github.com/re-mouse/Image-sources/blob/master/AssetsDependencies.png?raw=true) | ![](https://github.com/re-mouse/Image-sources/blob/master/UnusedAssets.png?raw=true)
